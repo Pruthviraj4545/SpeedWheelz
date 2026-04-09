@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact SpeedWheelz Auto Care - Address, phone, email and location">
+  <title>Contact Us - SpeedWheelz</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <span class="logo-icon"><i class="fas fa-car"></i></span>
+      <span>Speed<span class="highlight">Wheelz</span></span>
+    </a>
+    <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/book">Book Appointment</a></li>
+      <li><a href="/appointments-page">Appointments</a></li>
+      <li><a href="/contact" class="active">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="page-header">
+    <h1>📞 Contact Us</h1>
+    <p>Get in touch with SpeedWheelz Auto Care</p>
+  </section>
+
+  <main>
+    <section class="card">
+      <h2>Reach Out To Us</h2>
+      <div class="contact-grid">
+        <div class="contact-info-card">
+          <div class="icon">📍</div>
+          <div>
+            <h3>Address</h3>
+            <p>42, MG Road, Near City Mall,<br>Pune, Maharashtra - 411001</p>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <div class="icon">📞</div>
+          <div>
+            <h3>Phone</h3>
+            <p>+91 98765 43210<br>+91 87654 32109</p>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <div class="icon">✉️</div>
+          <div>
+            <h3>Email</h3>
+            <p>info@speedwheelz.com<br>bookings@speedwheelz.com</p>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <div class="icon"><i class="fas fa-clock"></i></div>
+          <div>
+            <h3>Working Hours</h3>
+            <p>Mon – Sat: 10:00 AM – 6:00 PM<br>Sunday: Closed</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>💬 Send Us a Message</h2>
+      <form id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contactName">Your Name</label>
+            <input type="text" id="contactName" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label for="contactEmail">Your Email</label>
+            <input type="email" id="contactEmail" placeholder="Enter your email" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="contactSubject">Subject</label>
+          <input type="text" id="contactSubject" placeholder="Subject of your message" required>
+        </div>
+        <div class="form-group">
+          <label for="contactMessage">Message</label>
+          <textarea id="contactMessage" rows="5" placeholder="Write your message here..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+      <div id="contactMsg" class="message" style="display:none;"></div>
+    </section>
+
+    <section class="card">
+      <h2>📍 Find Us</h2>
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.065684018825!2d73.87740731035081!3d18.52011526818929!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c08520f8b003%3A0x92cf37d06aa2b42a!2sMG%20Road%2C%20Pune!5e0!3m2!1sen!2sin!4v1680000000000" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <span class="highlight">SpeedWheelz Auto Care</span> — All Rights Reserved</p>
+  </footer>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const msg = document.getElementById('contactMsg');
+      msg.textContent = '✅ Thank you! Your message has been sent. We will get back to you soon.';
+      msg.className = 'message success';
+      msg.style.display = 'block';
+      this.reset();
+      setTimeout(() => msg.style.display = 'none', 5000);
+    });
+  </script>
+</body>
+</html>

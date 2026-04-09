@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Book your car service appointment at SpeedWheelz Auto Care">
+  <title>Book Appointment - SpeedWheelz</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <span class="logo-icon"><i class="fas fa-car"></i></span>
+      <span>Speed<span class="highlight">Wheelz</span></span>
+    </a>
+    <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/book" class="active">Book Appointment</a></li>
+      <li><a href="/appointments-page">Appointments</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="page-header">
+    <h1><i class="fas fa-calendar-plus"></i> Book an Appointment</h1>
+    <p>Fill in the details below to schedule your car service</p>
+  </section>
+
+  <main>
+    <section class="card">
+      <h2>Your Details</h2>
+      <form id="bookingForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="e.g. Rahul Sharma" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="e.g. 9876543210" pattern="[0-9]{10}" title="Enter a 10-digit phone number" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="carBrand">Car Brand</label>
+            <select id="carBrand" required>
+              <option value="">-- Select Brand --</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="carModel">Car Model</label>
+            <input type="text" id="carModel" placeholder="e.g. Swift, Creta, Nexon" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="service">Service Type</label>
+          <select id="service" required>
+            <option value="">-- Select a Service --</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="date">Appointment Date</label>
+          <input type="date" id="date" required>
+        </div>
+
+        <!-- Time Slots -->
+        <div class="time-slots-container" id="timeSlotsSection" style="display:none;">
+          <label>Select Time Slot</label>
+          <div class="lunch-notice"><i class="fas fa-utensils"></i> Lunch Break: 1:00 PM – 2:00 PM (No bookings)</div>
+          <div class="time-slots-grid" id="timeSlotsGrid"></div>
+          <div class="slot-legend">
+            <span><span class="legend-dot available"></span> Available</span>
+            <span><span class="legend-dot selected-legend"></span> Selected</span>
+            <span><span class="legend-dot booked-legend"></span> Booked</span>
+          </div>
+          <input type="hidden" id="selectedTime" required>
+        </div>
+
+        <div id="noSlotsMsg" style="display:none;" class="lunch-notice">
+          <i class="fas fa-exclamation-triangle"></i> No available slots for this date. Please pick another date.
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submitBtn">Book Appointment</button>
+      </form>
+      <div id="message" class="message" style="display:none;"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <span class="highlight">SpeedWheelz Auto Care</span> — All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const API = '';
+    let selectedTimeSlot = '';
+
+    // Load services
+    fetch(API + '/services')
+      .then(r => r.json())
+      .then(services => {
+        const sel = document.getElementById('service');
+        services.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s.name;
+          opt.textContent = s.name;
+          sel.appendChild(opt);
+        });
+      });
+
+    // Load car brands
+    fetch(API + '/carbrands')
+      .then(r => r.json())
+      .then(brands => {
+        const sel = document.getElementById('carBrand');
+        brands.forEach(b => {
+          const opt = document.createElement('option');
+          opt.value = b;
+          opt.textContent = b;
+          sel.appendChild(opt);
+        });
+      });
+
+    // Set min date to today
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    document.getElementById('date').setAttribute('min', yyyy + '-' + mm + '-' + dd);
+
+    // When date changes, fetch available slots
+    document.getElementById('date').addEventListener('change', async function () {
+      const date = this.value;
+      if (!date) return;
+
+      const slotsSection = document.getElementById('timeSlotsSection');
+      const grid = document.getElementById('timeSlotsGrid');
+      const noSlotsMsg = document.getElementById('noSlotsMsg');
+
+      grid.innerHTML = '<p class="loading">Loading slots...</p>';
+      slotsSection.style.display = 'block';
+      noSlotsMsg.style.display = 'none';
+      selectedTimeSlot = '';
+      document.getElementById('selectedTime').value = '';
+
+      try {
+        const res = await fetch(API + '/timeslots?date=' + date);
+        const data = await res.json();
+
+        grid.innerHTML = '';
+
+        if (data.availableSlots.length === 0 && data.bookedSlots.length === data.allSlots.length) {
+          slotsSection.style.display = 'none';
+          noSlotsMsg.style.display = 'block';
+          return;
+        }
+
+        if (data.availableSlots.length === 0) {
+          slotsSection.style.display = 'none';
+          noSlotsMsg.style.display = 'block';
+          return;
+        }
+
+        data.allSlots.forEach(slot => {
+          const div = document.createElement('div');
+          div.className = 'time-slot';
+          // Convert to 12-hour format for display
+          const [h, m] = slot.split(':');
+          const hr = parseInt(h);
+          const ampm = hr >= 12 ? 'PM' : 'AM';
+          const displayHr = hr > 12 ? hr - 12 : hr;
+          div.textContent = displayHr + ':' + m + ' ' + ampm;
+
+          if (data.bookedSlots.includes(slot) || !data.availableSlots.includes(slot)) {
+            div.classList.add('booked');
+            div.title = 'This slot is already booked';
+          } else {
+            div.addEventListener('click', () => selectSlot(slot, div));
+          }
+
+          grid.appendChild(div);
+        });
+      } catch (err) {
+        grid.innerHTML = '<p class="loading">Failed to load slots.</p>';
+      }
+    });
+
+    function selectSlot(time, el) {
+      document.querySelectorAll('.time-slot.selected').forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedTimeSlot = time;
+      document.getElementById('selectedTime').value = time;
+    }
+
+    // Submit booking
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msgDiv = document.getElementById('message');
+
+      if (!selectedTimeSlot) {
+          msgDiv.textContent = 'Please select a time slot.';
+        msgDiv.className = 'message error';
+        msgDiv.style.display = 'block';
+        setTimeout(() => msgDiv.style.display = 'none', 3000);
+        return;
+      }
+
+      const data = {
+        name: document.getElementById('name').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        carBrand: document.getElementById('carBrand').value,
+        carModel: document.getElementById('carModel').value.trim(),
+        service: document.getElementById('service').value,
+        date: document.getElementById('date').value,
+        time: selectedTimeSlot
+      };
+
+      try {
+        const res = await fetch(API + '/appointments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+
+        if (res.ok) {
+          msgDiv.textContent = 'Appointment booked successfully!';
+          msgDiv.className = 'message success';
+          msgDiv.style.display = 'block';
+          document.getElementById('bookingForm').reset();
+          document.getElementById('timeSlotsSection').style.display = 'none';
+          selectedTimeSlot = '';
+        } else {
+          msgDiv.textContent = (result.error || 'Failed to book.');
+          msgDiv.className = 'message error';
+          msgDiv.style.display = 'block';
+        }
+      } catch (err) {
+        msgDiv.textContent = 'Server error. Please try again.';
+        msgDiv.className = 'message error';
+        msgDiv.style.display = 'block';
+      }
+
+      setTimeout(() => msgDiv.style.display = 'none', 4000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SpeedWheelz Auto Care - Premium car servicing">
+  <title>SpeedWheelz Auto Care</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #0d1421;
+      --amber: #f5a623;
+      --amber-dark: #d4900e;
+      --red: #e63946;
+      --white: #fff;
+      --gray: #94a3b8;
+      --gray2: #1e293b;
+      --gray3: #334155;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.4)
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden
+    }
+
+    h1,
+    h2,
+    h3,
+    .stat-num,
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 1px
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gray3);
+      border-radius: 4px
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--amber)
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 70px;
+      transition: all .3s
+    }
+
+    .navbar.scrolled {
+      background: rgba(13, 20, 33, .85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245, 166, 35, .15);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, .5)
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 2px
+    }
+
+    .brand .dot {
+      color: var(--amber)
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      list-style: none
+    }
+
+    .nav-links a {
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: .92rem;
+      transition: all .3s;
+      color: var(--gray)
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--amber);
+      background: rgba(245, 166, 35, .08)
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 60px;
+      position: relative;
+      background: var(--bg2);
+      overflow: hidden
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-conic-gradient(rgba(255, 255, 255, .03) 0% 25%, transparent 0% 50%) 0 0/40px 40px;
+      opacity: .6
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 80%, rgba(245, 166, 35, .08), transparent 70%)
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px
+    }
+
+    .hero h1 {
+      font-size: 4.5rem;
+      line-height: 1.05;
+      margin-bottom: 16px;
+      letter-spacing: 4px
+    }
+
+    .hero h1 .highlight {
+      color: var(--amber);
+      text-shadow: 0 0 30px rgba(245, 166, 35, .3)
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--gray);
+      margin-bottom: 36px;
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    .btn {
+      padding: 14px 32px;
+      border: none;
+      border-radius: 8px;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s;
+      font-family: 'Inter', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .btn-amber {
+      background: var(--amber);
+      color: var(--bg)
+    }
+
+    .btn-amber:hover {
+      background: var(--amber-dark);
+      box-shadow: 0 0 20px rgba(245, 166, 35, .4);
+      transform: translateY(-2px)
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--amber);
+      border: 2px solid var(--amber)
+    }
+
+    .btn-outline:hover {
+      background: rgba(245, 166, 35, .1);
+      box-shadow: 0 0 20px rgba(245, 166, 35, .2)
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: #fff
+    }
+
+    .btn-red:hover {
+      background: #c1121f
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, .05);
+      color: var(--gray);
+      border: 1px solid var(--gray3)
+    }
+
+    .btn-ghost:hover {
+      color: var(--white);
+      border-color: var(--gray)
+    }
+
+    /* Stats */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--bg);
+      border-top: 1px solid var(--gray3);
+      border-bottom: 1px solid var(--gray3)
+    }
+
+    .stat {
+      text-align: center;
+      padding: 36px 16px;
+      border-right: 1px solid var(--gray3)
+    }
+
+    .stat:last-child {
+      border-right: none
+    }
+
+    .stat-num {
+      font-size: 2.8rem;
+      color: var(--amber);
+      display: block
+    }
+
+    .stat-label {
+      color: var(--gray);
+      font-size: .9rem;
+      margin-top: 4px
+    }
+
+    /* Section */
+    .section {
+      padding: 80px 20px
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    .section-title {
+      font-size: 2.6rem;
+      text-align: center;
+      margin-bottom: 12px;
+      letter-spacing: 2px
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--gray);
+      margin-bottom: 50px;
+      font-size: 1rem
+    }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .service-card {
+      background: var(--bg2);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: var(--radius);
+      padding: 30px 24px;
+      text-align: left;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+      cursor: pointer;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .service-card:hover {
+      border-color: rgba(245, 166, 35, 0.35);
+      box-shadow: 0 18px 45px rgba(245, 166, 35, .16);
+      transform: translateY(-8px) scale(1.03);
+    }
+
+    .service-card .icon {
+      font-size: 2.4rem;
+      margin-bottom: 18px;
+      color: var(--amber);
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .service-card p {
+      color: var(--gray);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      font-size: 0.98rem;
+    }
+
+    .service-card button {
+      align-self: flex-start;
+      margin-top: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .service-card .icon {
+      font-size: 2.4rem;
+      margin-bottom: 14px;
+      color: var(--amber)
+    }
+
+    .service-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600
+    }
+
+    .service-card .dur {
+      color: var(--gray);
+      font-size: .82rem;
+      margin-bottom: 14px
+    }
+
+    .service-card .btn {
+      padding: 8px 20px;
+      font-size: .82rem;
+      width: 100%
+    }
+
+    /* Why Us */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px
+    }
+
+    .why-card {
+      background: var(--bg2);
+      border: 1px solid var(--gray3);
+      border-radius: var(--radius);
+      padding: 30px 22px;
+      text-align: center;
+      transition: all .3s
+    }
+
+    .why-card:hover {
+      border-color: var(--amber);
+      transform: translateY(-3px)
+    }
+
+    .why-card .icon {
+      font-size: 2.2rem;
+      margin-bottom: 14px;
+      display: block;
+      color: var(--amber)
+    }
+
+    .why-card h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: var(--amber);
+      font-family: 'Inter', sans-serif;
+      font-weight: 600
+    }
+
+    .why-card p {
+      color: var(--gray);
+      font-size: .88rem
+    }
+
+    /* Testimonials */
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px
+    }
+
+    .test-card {
+      background: var(--bg2);
+      border: 1px solid var(--gray3);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: all .3s
+    }
+
+    .test-card:hover {
+      border-color: var(--amber)
+    }
+
+    .test-stars {
+      color: var(--amber);
+      font-size: 1.1rem;
+      margin-bottom: 12px
+    }
+
+    .test-text {
+      color: var(--gray);
+      font-size: .92rem;
+      font-style: italic;
+      margin-bottom: 16px;
+      line-height: 1.7
+    }
+
+    .test-author {
+      font-weight: 600;
+      font-size: .95rem
+    }
+
+    .test-car {
+      color: var(--gray);
+      font-size: .8rem
+    }
+
+    /* Booking */
+    .book-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    .book-info {
+      background: var(--bg2);
+      border: 1px solid var(--gray3);
+      border-radius: var(--radius);
+      padding: 32px;
+      align-self: start;
+      position: sticky;
+      top: 90px
+    }
+
+    .book-info h3 {
+      color: var(--amber);
+      margin-bottom: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem
+    }
+
+    .book-info p,
+    .book-info li {
+      color: var(--gray);
+      font-size: .9rem;
+      margin-bottom: 8px
+    }
+
+    .book-info ul {
+      list-style: none;
+      margin-bottom: 20px
+    }
+
+    .book-info ul li::before {
+      content: '✓';
+      color: var(--amber);
+      margin-right: 8px;
+      font-weight: 700
+    }
+
+    .trust-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px
+    }
+
+    .badge {
+      background: rgba(245, 166, 35, .1);
+      color: var(--amber);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 600;
+      border: 1px solid rgba(245, 166, 35, .2)
+    }
+
+    .book-form-card {
+      background: var(--bg2);
+      border: 1px solid var(--gray3);
+      border-radius: var(--radius);
+      padding: 32px
+    }
+
+    .form-group {
+      margin-bottom: 18px
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+      font-size: .9rem;
+      color: var(--gray)
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, .04);
+      border: 1.5px solid var(--gray3);
+      border-radius: 8px;
+      color: var(--white);
+      font-size: .95rem;
+      font-family: 'Inter', sans-serif;
+      transition: all .3s
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 12px rgba(245, 166, 35, .15)
+    }
+
+    .form-group select option {
+      background: var(--bg2);
+      color: var(--white)
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px
+    }
+
+    /* Time Slots */
+    .slots-label {
+      font-weight: 500;
+      margin-bottom: 10px;
+      font-size: .9rem;
+      color: var(--gray);
+      display: block
+    }
+
+    .time-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px
+    }
+
+    .pill {
+      padding: 10px 18px;
+      border: 2px solid var(--gray3);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--gray);
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s;
+      font-family: 'Inter', sans-serif
+    }
+
+    .pill:hover:not(.booked):not(.sel) {
+      border-color: var(--amber);
+      color: var(--amber)
+    }
+
+    .pill.sel {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: var(--bg)
+    }
+
+    .pill.booked {
+      opacity: .35;
+      cursor: not-allowed;
+      text-decoration: line-through
+    }
+
+    /* Appointments */
+    .apt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px
+    }
+
+    .apt-count {
+      background: var(--amber);
+      color: var(--bg);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: .85rem
+    }
+
+    .apt-controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .apt-controls input,
+    .apt-controls select {
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, .04);
+      border: 1.5px solid var(--gray3);
+      border-radius: 8px;
+      color: var(--white);
+      font-size: .9rem;
+      font-family: 'Inter', sans-serif;
+      transition: all .3s
+    }
+
+    .apt-controls input:focus,
+    .apt-controls select:focus {
+      outline: none;
+      border-color: var(--amber)
+    }
+
+    .apt-controls input {
+      min-width: 220px
+    }
+
+    .apt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px
+    }
+
+    .apt-card {
+      background: var(--bg2);
+      border: 1px solid var(--gray3);
+      border-radius: var(--radius);
+      padding: 22px;
+      transition: all .3s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .apt-card:hover {
+      border-color: var(--gray);
+      box-shadow: var(--shadow)
+    }
+
+    .apt-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .apt-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase
+    }
+
+    .apt-badge.today {
+      background: rgba(245, 166, 35, .15);
+      color: var(--amber)
+    }
+
+    .apt-badge.upcoming {
+      background: rgba(34, 197, 94, .15);
+      color: #22c55e
+    }
+
+    .apt-badge.past {
+      background: rgba(148, 163, 184, .15);
+      color: var(--gray)
+    }
+
+    .apt-card h3 {
+      font-size: 1.05rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600
+    }
+
+    .apt-card p {
+      color: var(--gray);
+      font-size: .88rem
+    }
+
+    .apt-card p span {
+      color: var(--white);
+      font-weight: 500
+    }
+
+    .apt-card-actions {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid var(--gray3)
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray)
+    }
+
+    .empty-state .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      opacity: .4
+    }
+
+    .empty-state p {
+      font-size: 1.05rem
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 30px
+    }
+
+    .contact-card {
+      background: var(--bg2);
+      border: 1px solid var(--gray3);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      transition: all .3s
+    }
+
+    .contact-card:hover {
+      border-color: var(--amber)
+    }
+
+    .contact-card .icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: var(--amber)
+    }
+
+    .contact-card h3 {
+      font-size: .95rem;
+      color: var(--amber);
+      margin-bottom: 6px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600
+    }
+
+    .contact-card p {
+      color: var(--gray);
+      font-size: .85rem
+    }
+
+    .contact-form-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px
+    }
+
+    .contact-form-card {
+      background: var(--bg2);
+      border: 1px solid var(--gray3);
+      border-radius: var(--radius);
+      padding: 30px
+    }
+
+    .map-box {
+      background: var(--bg2);
+      border: 1px solid var(--gray3);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      color: var(--gray);
+      font-size: 1.1rem
+    }
+
+    .map-box .map-icon {
+      font-size: 3rem
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .7);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: all
+    }
+
+    .modal {
+      background: var(--bg2);
+      border: 1px solid var(--gray3);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      transform: scale(.9);
+      transition: transform .3s
+    }
+
+    .modal-overlay.show .modal {
+      transform: scale(1)
+    }
+
+    .modal h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px
+    }
+
+    .modal p {
+      color: var(--gray);
+      margin-bottom: 8px;
+      font-size: .92rem
+    }
+
+    .modal-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px
+    }
+
+    /* Success Modal */
+    .success-modal .checkmark {
+      font-size: 4rem;
+      margin-bottom: 12px
+    }
+
+    .success-detail {
+      background: rgba(255, 255, 255, .03);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      text-align: left
+    }
+
+    .success-detail p {
+      margin-bottom: 6px;
+      font-size: .88rem
+    }
+
+    /* Confetti */
+    .confetti-piece {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      z-index: 3000;
+      pointer-events: none;
+      animation: confFall 3s ease-out forwards
+    }
+
+    @keyframes confFall {
+      0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0)
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(720deg)
+      }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .toast {
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: .9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: toastIn .3s;
+      box-shadow: var(--shadow);
+      min-width: 280px
+    }
+
+    .toast.success {
+      background: #065f46;
+      border: 1px solid #10b981
+    }
+
+    .toast.error {
+      background: #7f1d1d;
+      border: 1px solid var(--red)
+    }
+
+    @keyframes toastIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1
+      }
+    }
+
+    /* Spinner */
+    .spinner-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 15, .6);
+      z-index: 1500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s
+    }
+
+    .spinner-overlay.show {
+      opacity: 1;
+      pointer-events: all
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid var(--gray3);
+      border-top-color: var(--amber);
+      border-radius: 50%;
+      animation: spin .8s linear infinite
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* Back to top */
+    .back-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--amber);
+      color: var(--bg);
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all .3s;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(245, 166, 35, .3)
+    }
+
+    .back-top.show {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .back-top:hover {
+      background: var(--amber-dark)
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--gray3);
+      padding: 50px 20px 24px
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 30px
+    }
+
+    .footer h4 {
+      color: var(--amber);
+      margin-bottom: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: .95rem
+    }
+
+    .footer p,
+    .footer li,
+    .footer a {
+      color: var(--gray);
+      font-size: .85rem
+    }
+
+    .footer ul {
+      list-style: none
+    }
+
+    .footer li {
+      margin-bottom: 8px
+    }
+
+    .footer a:hover {
+      color: var(--amber)
+    }
+
+    .footer-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 10px
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 24px;
+      margin-top: 30px;
+      border-top: 1px solid var(--gray3);
+      color: var(--gray);
+      font-size: .82rem;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    /* Page transitions */
+    .page {
+      display: none;
+      animation: fadeIn .35s ease
+    }
+
+    .page.active {
+      display: block
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* Responsive */
+    @media(max-width:1024px) {
+
+      .services-grid,
+      .why-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .test-grid {
+        grid-template-columns: 1fr
+      }
+
+      .contact-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:768px) {
+      .navbar {
+        padding: 0 16px
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(13, 20, 33, .95);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        padding: 12px;
+        border-bottom: 1px solid var(--gray3)
+      }
+
+      .nav-links.open {
+        display: flex
+      }
+
+      .menu-toggle {
+        display: block
+      }
+
+      .hero h1 {
+        font-size: 2.6rem
+      }
+
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .stat {
+        border-bottom: 1px solid var(--gray3)
+      }
+
+      .book-layout {
+        grid-template-columns: 1fr
+      }
+
+      .book-info {
+        position: static
+      }
+
+      .form-row {
+        grid-template-columns: 1fr
+      }
+
+      .contact-form-section {
+        grid-template-columns: 1fr
+      }
+
+      .apt-grid {
+        grid-template-columns: 1fr
+      }
+
+      .services-grid,
+      .why-grid,
+      .contact-grid {
+        grid-template-columns: 1fr
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.3);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      70% {
+        transform: scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    .animate-slide-in-left {
+      animation: slideInLeft 0.8s ease-out forwards;
+    }
+
+    .animate-slide-in-right {
+      animation: slideInRight 0.8s ease-out forwards;
+    }
+
+    .animate-bounce-in {
+      animation: bounceIn 1s ease-out forwards;
+    }
+
+    /* Initial states for animations */
+    .hero-content h1,
+    .hero-content p,
+    .hero-btns {
+      opacity: 0;
+    }
+
+    .stat {
+      opacity: 0;
+    }
+
+    .service-card {
+      opacity: 0;
+    }
+
+    .why-card {
+      opacity: 0;
+    }
+
+    .test-card {
+      opacity: 0;
+    }
+
+    /* Hover animations */
+    .service-card:hover .icon {
+      animation: bounceIn 0.6s ease-out;
+    }
+
+    .why-card:hover .icon {
+      animation: bounceIn 0.6s ease-out;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="brand" onclick="navigate('home');return false"><i class="fas fa-car"></i> SPEED<span class="dot">WHEELZ</span></a>
+    <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" data-page="home" class="active" onclick="navigate('home');return false">Home</a></li>
+      <li><a href="#" data-page="book" onclick="navigate('book');return false">Book Appointment</a></li>
+      <li><a href="#" data-page="appointments" onclick="navigate('appointments');return false">Appointments</a></li>
+      <li><a href="#" data-page="contact" onclick="navigate('contact');return false">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toasts"></div>
+  <!-- Spinner -->
+  <div class="spinner-overlay" id="spinner">
+    <div class="spinner"></div>
+  </div>
+  <!-- Back to top -->
+  <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <!-- ==================== HOME ==================== -->
+  <div class="page active" id="page-home">
+    <section class="hero">
+      <div class="hero-content">
+        <h1>PRECISION <span class="highlight">CAR CARE</span>,<br>DELIVERED</h1>
+        <p>Experience world-class automotive service with cutting-edge technology and certified experts. Your car
+          deserves the best.</p>
+        <div class="hero-btns"><a href="#" class="btn btn-amber" onclick="navigate('book');return false">Book Now
+            →</a><a href="#" class="btn btn-outline"
+            onclick="document.getElementById('svc-section').scrollIntoView({behavior:'smooth'});return false">View
+            Services ↓</a></div>
+      </div>
+    </section>
+    <div class="stats-row">
+      <div class="stat"><span class="stat-num" data-target="2500">0</span><span class="stat-label">Cars Serviced</span>
+      </div>
+      <div class="stat"><span class="stat-num" data-target="8">0</span><span class="stat-label">Expert Services</span>
+      </div>
+      <div class="stat"><span class="stat-num" data-target="4.9" data-decimal="true">0</span><span class="stat-label">★
+          Rating</span></div>
+      <div class="stat"><span class="stat-num" data-target="1">0</span><span class="stat-label">Same-Day Booking</span>
+      </div>
+    </div>
+    <section class="section" id="svc-section">
+      <div class="section-inner">
+        <h2 class="section-title">OUR SERVICES</h2>
+        <p class="section-sub">Premium care for every vehicle — choose from our expert service lineup</p>
+        <div class="services-grid" id="homeServices">
+          <div class="service-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
+            <div class="icon"><i class="fas fa-tools"></i></div>
+            <h3>Car Servicing</h3>
+            <p>Full inspection, tune-up, and maintenance to keep your vehicle running smoothly.</p>
+            <button class="btn btn-amber" onclick="navigate('book');return false">Book Now</button>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
+            <div class="icon"><i class="fas fa-oil-can"></i></div>
+            <h3>Oil Change</h3>
+            <p>Fresh engine oil and filter replacement for improved performance and longevity.</p>
+            <button class="btn btn-amber" onclick="navigate('book');return false">Book Now</button>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
+            <div class="icon"><i class="fas fa-bolt"></i></div>
+            <h3>Engine Diagnostics</h3>
+            <p>Advanced scanning and troubleshooting to identify issues before they become costly.</p>
+            <button class="btn btn-amber" onclick="navigate('book');return false">Book Now</button>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="400">
+            <div class="icon"><i class="fas fa-wheelchair"></i></div>
+            <h3>Wheel Alignment</h3>
+            <p>Precision alignment for safer handling, longer tire life, and smoother drives.</p>
+            <button class="btn btn-amber" onclick="navigate('book');return false">Book Now</button>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
+            <div class="icon"><i class="fas fa-car-side"></i></div>
+            <h3>Car Wash</h3>
+            <p>Professional exterior and interior cleaning for a polished, showroom-quality finish.</p>
+            <button class="btn btn-amber" onclick="navigate('book');return false">Book Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section" style="background:var(--bg2)">
+      <div class="section-inner">
+        <h2 class="section-title">WHY CHOOSE US</h2>
+        <p class="section-sub">What makes SpeedWheelz the #1 choice for car owners</p>
+        <div class="why-grid">
+          <div class="why-card"><span class="icon"><i class="fas fa-tools"></i></span>
+            <h3>Certified Technicians</h3>
+            <p>Factory-trained experts with 10+ years of experience handling all brands</p>
+          </div>
+          <div class="why-card"><span class="icon"><i class="fas fa-shield-alt"></i></span>
+            <h3>Genuine Parts</h3>
+            <p>100% authentic OEM parts with manufacturer warranty on every replacement</p>
+          </div>
+          <div class="why-card"><span class="icon"><i class="fas fa-truck-pickup"></i></span>
+            <h3>Free Pickup & Drop</h3>
+            <p>Complimentary doorstep pickup and delivery within city limits</p>
+          </div>
+          <div class="why-card"><span class="icon"><i class="fas fa-mobile-alt"></i></span>
+            <h3>Real-time Updates</h3>
+            <p>Live service tracking and instant notifications on your phone</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-inner">
+        <h2 class="section-title">HAPPY CUSTOMERS</h2>
+        <p class="section-sub">Don't just take our word for it — hear from our satisfied customers</p>
+        <div class="test-grid">
+          <div class="test-card">
+            <div class="test-stars">★★★★★</div>
+            <p class="test-text">"Absolutely fantastic service! Got my Creta fully serviced in under 4 hours. The team
+              was professional and transparent about everything."</p>
+            <div class="test-author">Aditya Dhotre</div>
+            <div class="test-car">Hyundai Creta Owner</div>
+          </div>
+          <div class="test-card">
+            <div class="test-stars">★★★★★</div>
+            <p class="test-text">"Best car service center in Pune! Free pickup-drop saved my entire day. My Swift runs
+              like new after the engine tune-up."</p>
+            <div class="test-author">Priya Kulkarni</div>
+            <div class="test-car">Maruti Swift Owner</div>
+          </div>
+          <div class="test-card">
+            <div class="test-stars">★★★★★</div>
+            <p class="test-text">"I was skeptical at first, but SpeedWheelz exceeded all expectations. Fair pricing,
+              genuine parts, and exceptional customer care."</p>
+            <div class="test-author">Amit Deshmukh</div>
+            <div class="test-car">Tata Nexon Owner</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== BOOK ==================== -->
+  <div class="page" id="page-book">
+    <section class="page-header" style="background:var(--bg2);text-align:center;padding:100px 20px 40px">
+      <h1 style="font-size:2.6rem;letter-spacing:3px">BOOK YOUR <span class="highlight">APPOINTMENT</span></h1>
+      <p style="color:var(--gray);margin-top:8px">Schedule your car service in under 2 minutes</p>
+    </section>
+    <section class="section" style="padding-top:40px">
+      <div class="book-layout">
+        <div class="book-info">
+          <h3><i class="fas fa-clipboard-list"></i> Booking Information</h3>
+          <p>Fill the form to reserve your service slot. We'll take care of the rest!</p><br>
+          <h3><i class="fas fa-clock"></i> Business Hours</h3>
+          <ul>
+            <li>Monday – Saturday: 10 AM – 6 PM</li>
+            <li>Sunday: Closed</li>
+            <li>Lunch Break: 1 PM – 2 PM</li>
+          </ul>
+          <h3><i class="fas fa-shield-alt"></i> Our Guarantee</h3>
+          <div class="trust-badges"><span class="badge">✓ Certified Mechanics</span><span class="badge">✓ Genuine
+              Parts</span><span class="badge">✓ Free Pickup</span><span class="badge">✓ 24hr Support</span></div>
+        </div>
+        <div class="book-form-card">
+          <h2 style="font-family:'Inter',sans-serif;font-size:1.3rem;margin-bottom:20px">Service Booking Form</h2>
+          <form id="bookForm">
+            <div class="form-row">
+              <div class="form-group"><label>Full Name</label><input type="text" id="bName"
+                  placeholder="e.g. Rahul Sharma" required></div>
+              <div class="form-group"><label>Phone Number</label><input type="tel" id="bPhone"
+                  placeholder="e.g. 9876543210" pattern="[0-9]{10}" required></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Car Brand</label><select id="bBrand" required>
+                  <option value="">Select Brand</option>
+                  <option>Maruti Suzuki</option>
+                  <option>Hyundai</option>
+                  <option>Tata</option>
+                  <option>Honda</option>
+                  <option>Toyota</option>
+                  <option>Mahindra</option>
+                  <option>Kia</option>
+                  <option>MG</option>
+                  <option>Ford</option>
+                  <option>Others</option>
+                </select></div>
+              <div class="form-group"><label>Car Model</label><input type="text" id="bModel"
+                  placeholder="e.g. Swift, Creta" required></div>
+            </div>
+            <div class="form-group"><label>Service Type</label><select id="bService" required>
+                <option value="">Select Service</option>
+              </select></div>
+            <div class="form-group"><label>Appointment Date</label><input type="date" id="bDate" required></div>
+            <div id="slotsArea" style="display:none"><span class="slots-label">Select Time Slot</span>
+              <div class="time-pills" id="timePills"></div>
+            </div>
+            <button type="submit" class="btn btn-amber" style="width:100%;justify-content:center;margin-top:8px">Confirm
+              Booking →</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== APPOINTMENTS ==================== -->
+  <div class="page" id="page-appointments">
+    <section class="page-header" style="background:var(--bg2);text-align:center;padding:100px 20px 40px">
+      <h1 style="font-size:2.6rem;letter-spacing:3px">ALL <span class="highlight">APPOINTMENTS</span></h1>
+      <p style="color:var(--gray);margin-top:8px">Manage and track all booked service appointments</p>
+    </section>
+    <section class="section" style="padding-top:40px">
+      <div class="section-inner">
+        <div class="apt-header">
+          <div>
+            <h2 style="font-family:'Inter',sans-serif;font-size:1.2rem;display:inline">Appointments </h2><span
+              class="apt-count" id="aptCount">0</span>
+          </div>
+          <div class="apt-controls"><input type="text" id="aptSearch"
+              placeholder="🔍 Search name, car, service..."><select id="aptFilter">
+              <option value="all">All</option>
+              <option value="today">Today</option>
+              <option value="upcoming">Upcoming</option>
+              <option value="past">Past</option>
+            </select></div>
+        </div>
+        <div id="aptGrid" class="apt-grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== CONTACT ==================== -->
+  <div class="page" id="page-contact">
+    <section class="page-header" style="background:var(--bg2);text-align:center;padding:100px 20px 40px">
+      <h1 style="font-size:2.6rem;letter-spacing:3px">CONTACT <span class="highlight">US</span></h1>
+      <p style="color:var(--gray);margin-top:8px">We'd love to hear from you — reach out anytime</p>
+    </section>
+    <section class="section" style="padding-top:40px">
+      <div class="section-inner">
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="icon">📍</div>
+            <h3>Address</h3>
+            <p>42, MG Road, Near City Mall<br>Pune 411001</p>
+          </div>
+          <div class="contact-card">
+            <div class="icon">📞</div>
+            <h3>Phone</h3>
+            <p>+91 98765 43210<br>+91 87654 32109</p>
+          </div>
+          <div class="contact-card">
+            <div class="icon">✉️</div>
+            <h3>Email</h3>
+            <p>info@speedwheelz.com<br>bookings@speedwheelz.com</p>
+          </div>
+          <div class="contact-card">
+            <div class="icon"><i class="fas fa-clock"></i></div>
+            <h3>Hours</h3>
+            <p>Mon–Sat: 10AM – 6PM<br>Sunday: Closed</p>
+          </div>
+        </div>
+        <div class="contact-form-section">
+          <div class="contact-form-card">
+            <h2 style="font-family:'Inter',sans-serif;font-size:1.2rem;margin-bottom:20px">Send a Message</h2>
+            <form id="contactForm">
+              <div class="form-group"><label>Name</label><input type="text" placeholder="Your name" required></div>
+              <div class="form-group"><label>Email</label><input type="email" placeholder="Your email" required></div>
+              <div class="form-group"><label>Message</label><textarea rows="5" placeholder="Write your message..."
+                  style="resize:vertical" required></textarea></div><button type="submit" class="btn btn-amber"
+                style="width:100%;justify-content:center">Send Message →</button>
+            </form>
+          </div>
+          <div class="map-box"><span class="map-icon">📍</span><span
+              style="font-size:1.3rem;font-weight:600;color:var(--white)">Find Us Here</span>
+            <p style="max-width:280px;text-align:center;font-size:.88rem">42, MG Road, Near City Mall, Pune, Maharashtra
+              411001</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal-overlay" id="cancelModal">
+    <div class="modal">
+      <h2>⚠️ Cancel Appointment?</h2>
+      <p>Are you sure you want to cancel this service appointment? This action cannot be undone.</p>
+      <div class="modal-btns"><button class="btn btn-red" id="confirmCancel">Yes, Cancel</button><button
+          class="btn btn-ghost" onclick="closeCancelModal()">Go Back</button></div>
+    </div>
+  </div>
+  <div class="modal-overlay success-modal" id="successModal">
+    <div class="modal">
+      <div class="checkmark">✅</div>
+      <h2>Booking <span style="color:var(--amber)">Confirmed!</span></h2>
+      <p>Your appointment has been successfully booked.</p>
+      <div class="success-detail" id="successDetail"></div>
+      <div class="modal-btns"><button class="btn btn-amber" onclick="closeSuccessModal();navigate('appointments')">View
+          Appointments</button><button class="btn btn-ghost" onclick="closeSuccessModal()">Close</button></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand"><i class="fas fa-car"></i> SPEED<span style="color:var(--amber)">WHEELZ</span></div>
+        <p>Your trusted partner for premium car servicing in Pune. Fast, reliable, and hassle-free.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#" onclick="navigate('home');return false">Home</a></li>
+          <li><a href="#" onclick="navigate('book');return false">Book Appointment</a></li>
+          <li><a href="#" onclick="navigate('appointments');return false">Appointments</a></li>
+          <li><a href="#" onclick="navigate('contact');return false">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul id="footerServices"></ul>
+      </div>
+      <div>
+        <h4>Contact Info</h4>
+        <ul>
+          <li>📍 42, MG Road, Pune</li>
+          <li>📞 +91 98765 43210</li>
+          <li>✉️ info@speedwheelz.com</li>
+          <li><i class="fas fa-clock"></i> Mon–Sat 10AM–6PM</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 SpeedWheelz Auto Care. All Rights Reserved.</div>
+  </footer>
+
+  <script>
+    const API = '';
+    const homeServicesList = [
+      { icon: '<i class="fas fa-tools"></i>', title: 'Car Servicing', description: 'Full inspection, tune-up, and maintenance to keep your vehicle running smoothly.' },
+      { icon: '<i class="fas fa-oil-can"></i>', title: 'Oil Change', description: 'Fresh engine oil and filter replacement for improved performance and longevity.' },
+      { icon: '<i class="fas fa-bolt"></i>', title: 'Engine Diagnostics', description: 'Advanced scanning and troubleshooting to identify issues before they become costly.' },
+      { icon: '<i class="fas fa-ruler-combined"></i>', title: 'Wheel Alignment', description: 'Precision alignment for safer handling, longer tire life, and smoother drives.' },
+      { icon: '<i class="fas fa-car-side"></i>', title: 'Car Wash', description: 'Professional exterior and interior cleaning for a polished, showroom-quality finish.' }
+    ];
+    const svcIcons = ['<i class="fas fa-oil-can"></i>', '<i class="fas fa-car-wash"></i>', '<i class="fas fa-tools"></i>', '<i class="fas fa-sync-alt"></i>', '<i class="fas fa-stopwatch"></i>', '<i class="fas fa-snowflake"></i>', '<i class="fas fa-battery-full"></i>', '<i class="fas fa-cogs"></i>', '<i class="fas fa-ruler-combined"></i>', '<i class="fas fa-star"></i>'];
+    const svcDurations = ['45 min', '30 min', '3 hrs', '1 hr', '45 min', '2 hrs', '30 min', '2.5 hrs', '1 hr', '1.5 hrs'];
+    let allServices = [], allAppointments = [], selectedSlot = '', cancelId = '';
+
+    // === Navigation ===
+    function navigate(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.nav-links a').forEach(a => { a.classList.remove('active'); if (a.dataset.page === page) a.classList.add('active') });
+      document.querySelector('.nav-links').classList.remove('open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (page === 'home') animateCounters();
+      if (page === 'appointments') loadAppointments();
+      if (page === 'book') { loadBookServices(); setupDate(); }
+    }
+
+    // === Navbar scroll ===
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+      document.getElementById('backTop').classList.toggle('show', window.scrollY > 400);
+    });
+
+    // === Toast ===
+    function toast(msg, type = 'success') {
+      const t = document.createElement('div'); t.className = 'toast ' + type;
+      t.innerHTML = (type === 'success' ? '✅' : '❌') + ' ' + msg;
+      document.getElementById('toasts').appendChild(t);
+      setTimeout(() => t.remove(), 4000);
+    }
+
+    // === Spinner ===
+    function showSpinner() { document.getElementById('spinner').classList.add('show') }
+    function hideSpinner() { document.getElementById('spinner').classList.remove('show') }
+
+    // === Animated Counters ===
+    function animateCounters() {
+      document.querySelectorAll('.stat-num').forEach(el => {
+        const target = parseFloat(el.dataset.target); const dec = el.dataset.decimal === 'true';
+        let cur = 0; const step = target / (dec ? 50 : 60);
+        const suffix = target === 1 ? ' Day' : '+';
+        const timer = setInterval(() => {
+          cur += step; if (cur >= target) { cur = target; clearInterval(timer) }
+          el.textContent = (dec ? cur.toFixed(1) : Math.floor(cur)) + (target >= 10 ? '+' : '') + (target === 1 ? ' Day' : '');
+        }, 30);
+      });
+    }
+
+    // === Load Services ===
+    async function loadHomeServices() {
+      showSpinner();
+      try {
+        const r = await fetch(API + '/services'); allServices = await r.json();
+      } catch (e) {
+        allServices = [];
+        toast('Service section loaded with default packages', 'error');
+      }
+
+      const g = document.getElementById('homeServices'); g.innerHTML = '';
+      homeServicesList.forEach((s, i) => {
+        const d = document.createElement('div'); d.className = 'service-card';
+        d.setAttribute('data-aos', 'fade-up');
+        d.setAttribute('data-aos-duration', '700');
+        d.setAttribute('data-aos-delay', 120 + i * 80);
+        d.innerHTML = '<div class="icon">' + s.icon + '</div><h3>' + s.title + '</h3><p class="dur">' + s.description + '</p><button class="btn btn-amber" onclick="navigate(\'book\');return false">Book Now</button>';
+        g.appendChild(d);
+      });
+
+      const fs = document.getElementById('footerServices'); fs.innerHTML = '';
+      allServices.slice(0, 6).forEach(s => { const li = document.createElement('li'); li.textContent = s.name; fs.appendChild(li) });
+      if (window.AOS) { AOS.refresh(); }
+      hideSpinner();
+    }
+
+    function bookService(name) {
+      navigate('book');
+      setTimeout(() => { document.getElementById('bService').value = name }, 200);
+    }
+
+    // === Book Page ===
+    function loadBookServices() {
+      const sel = document.getElementById('bService');
+      if (sel.options.length <= 1) { allServices.forEach(s => { const o = document.createElement('option'); o.value = s.name; o.textContent = s.name; sel.appendChild(o) }) }
+    }
+
+    function setupDate() {
+      const d = document.getElementById('bDate');
+      const now = new Date(); const y = now.getFullYear(), m = String(now.getMonth() + 1).padStart(2, '0'), day = String(now.getDate()).padStart(2, '0');
+      d.min = y + '-' + m + '-' + day; d.value = '';
+      document.getElementById('slotsArea').style.display = 'none'; selectedSlot = '';
+    }
+
+    document.getElementById('bDate').addEventListener('change', async function () {
+      const date = this.value; if (!date) return;
+      // Check if Sunday
+      const dayOfWeek = new Date(date + 'T00:00:00').getDay();
+      if (dayOfWeek === 0) { toast('We are closed on Sundays. Please select another day.', 'error'); this.value = ''; document.getElementById('slotsArea').style.display = 'none'; return }
+
+      const area = document.getElementById('slotsArea'); const pills = document.getElementById('timePills');
+      pills.innerHTML = '<span style="color:var(--gray)">Loading slots...</span>'; area.style.display = 'block'; selectedSlot = '';
+
+      try {
+        const r = await fetch(API + '/timeslots?date=' + date); const data = await r.json();
+        pills.innerHTML = '';
+        const slots = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+        const labels = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
+        slots.forEach((s, i) => {
+          const b = document.createElement('button'); b.type = 'button'; b.className = 'pill'; b.textContent = labels[i];
+          const isBooked = data.bookedSlots && data.bookedSlots.includes(s);
+          const isAvailable = data.availableSlots && data.availableSlots.includes(s);
+          if (isBooked || !isAvailable) { b.classList.add('booked'); b.title = 'Unavailable' }
+          else { b.addEventListener('click', () => { document.querySelectorAll('.pill.sel').forEach(p => p.classList.remove('sel')); b.classList.add('sel'); selectedSlot = s }) }
+          pills.appendChild(b);
+        });
+        if (!data.availableSlots || data.availableSlots.length === 0) { pills.innerHTML = '<span style="color:var(--amber)">⚠️ No slots available for this date.</span>' }
+      } catch (e) { pills.innerHTML = '<span style="color:var(--red)">Failed to load slots</span>' }
+    });
+
+    // === Confetti ===
+    function confetti() {
+      const colors = ['#f5a623', '#e63946', '#22c55e', '#3b82f6', '#a855f7', '#fff'];
+      for (let i = 0; i < 60; i++) {
+        const c = document.createElement('div'); c.className = 'confetti-piece';
+        c.style.left = Math.random() * 100 + 'vw'; c.style.top = -10 + 'px'; c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.borderRadius = Math.random() > .5 ? '50%' : '2px'; c.style.width = (Math.random() * 8 + 6) + 'px'; c.style.height = c.style.width;
+        c.style.animationDuration = (Math.random() * 2 + 2) + 's'; c.style.animationDelay = (Math.random() * .5) + 's';
+        document.body.appendChild(c); setTimeout(() => c.remove(), 5000)
+      }
+    }
+
+    // === Book Form Submit ===
+    document.getElementById('bookForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!selectedSlot) { toast('Please select a time slot', 'error'); return }
+      const data = {
+        name: document.getElementById('bName').value.trim(), phone: document.getElementById('bPhone').value.trim(),
+        carBrand: document.getElementById('bBrand').value, carModel: document.getElementById('bModel').value.trim(),
+        service: document.getElementById('bService').value, date: document.getElementById('bDate').value, time: selectedSlot
+      };
+      showSpinner();
+      try {
+        const r = await fetch(API + '/appointments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const res = await r.json(); hideSpinner();
+        if (r.ok) {
+          confetti();
+          const sd = document.getElementById('successDetail');
+          const [h, m] = selectedSlot.split(':'); const hr = parseInt(h); const ampm = hr >= 12 ? 'PM' : 'AM'; const dh = hr > 12 ? hr - 12 : hr;
+          sd.innerHTML = '<p>👤 <span style="color:var(--white)">' + data.name + '</span></p><p>🚘 <span style="color:var(--white)">' + data.carBrand + ' ' + data.carModel + '</span></p><p>🔧 <span style="color:var(--white)">' + data.service + '</span></p><p>📅 <span style="color:var(--white)">' + data.date + '</span> ⏰ <span style="color:var(--white)">' + dh + ':' + m + ' ' + ampm + '</span></p>';
+          document.getElementById('successModal').classList.add('show');
+          document.getElementById('bookForm').reset(); document.getElementById('slotsArea').style.display = 'none'; selectedSlot = '';
+        } else { toast(res.error || 'Booking failed', 'error') }
+      } catch (e) { hideSpinner(); toast('Server error', 'error') }
+    });
+
+    function closeSuccessModal() { document.getElementById('successModal').classList.remove('show') }
+
+    // === Appointments ===
+    async function loadAppointments() {
+      showSpinner();
+      try {
+        const r = await fetch(API + '/appointments'); allAppointments = await r.json(); renderAppointments();
+      } catch (e) { toast('Failed to load', 'error') }
+      hideSpinner();
+    }
+
+    function renderAppointments() {
+      const search = document.getElementById('aptSearch').value.toLowerCase();
+      const filter = document.getElementById('aptFilter').value;
+      const now = new Date(); const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+
+      let list = allAppointments.filter(a => {
+        const match = a.name.toLowerCase().includes(search) || a.carModel.toLowerCase().includes(search) || a.service.toLowerCase().includes(search) || (a.carBrand && a.carBrand.toLowerCase().includes(search));
+        if (!match) return false;
+        if (filter === 'today') return a.date === todayStr;
+        if (filter === 'upcoming') return a.date >= todayStr;
+        if (filter === 'past') return a.date < todayStr;
+        return true;
+      });
+
+      document.getElementById('aptCount').textContent = list.length;
+      const grid = document.getElementById('aptGrid');
+      if (list.length === 0) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📭</div><p>No appointments found</p></div>'; return }
+
+      grid.innerHTML = '';
+      list.forEach(a => {
+        let status = 'upcoming', statusLabel = 'Upcoming';
+        if (a.date === todayStr) { status = 'today'; statusLabel = 'Today' }
+        else if (a.date < todayStr) { status = 'past'; statusLabel = 'Past' }
+        const [h, m] = a.time.split(':'); const hr = parseInt(h); const ampm = hr >= 12 ? 'PM' : 'AM'; const dh = hr > 12 ? hr - 12 : hr;
+        const svcIdx = allServices.findIndex(s => s.name === a.service); const icon = svcIcons[svcIdx] || '<i class="fas fa-tools"></i>';
+        const d = document.createElement('div'); d.className = 'apt-card';
+        d.innerHTML = '<div class="apt-card-top"><span>' + icon + ' ' + a.service + '</span><span class="apt-badge ' + status + '">' + statusLabel + '</span></div>' +
+          '<h3>' + a.name + '</h3><p><i class="fas fa-phone"></i> <span>' + a.phone + '</span></p><p><i class="fas fa-car"></i> <span>' + (a.carBrand ? a.carBrand + ' ' : '') + a.carModel + '</span></p>' +
+          '<p><i class="fas fa-calendar"></i> <span>' + a.date.split('-').reverse().join('/') + '</span> <i class="fas fa-clock"></i> <span>' + dh + ':' + m + ' ' + ampm + '</span></p>' +
+          '<div class="apt-card-actions"><button class="btn btn-red" style="width:100%;justify-content:center" onclick="openCancelModal(\'' + a._id + '\')">Cancel Appointment</button></div>';
+        grid.appendChild(d);
+      });
+    }
+
+    document.getElementById('aptSearch').addEventListener('input', renderAppointments);
+    document.getElementById('aptFilter').addEventListener('change', renderAppointments);
+
+    // === Cancel Modal ===
+    function openCancelModal(id) { cancelId = id; document.getElementById('cancelModal').classList.add('show') }
+    function closeCancelModal() { document.getElementById('cancelModal').classList.remove('show'); cancelId = '' }
+    document.getElementById('confirmCancel').addEventListener('click', async () => {
+      closeCancelModal(); showSpinner();
+      try {
+        const r = await fetch(API + '/appointments/' + cancelId, { method: 'DELETE' });
+        if (r.ok) { toast('Appointment cancelled'); loadAppointments() } else { toast('Failed to cancel', 'error') }
+      } catch (e) { toast('Server error', 'error') }
+      hideSpinner();
+    });
+
+    // === Contact Form ===
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault(); toast('Message sent! We will get back to you soon.'); e.target.reset();
+    });
+
+    // === Animations ===
+    function initAnimations() {
+      // Hero animations
+      setTimeout(() => {
+        document.querySelector('.hero h1').classList.add('animate-fade-in-up');
+      }, 200);
+      setTimeout(() => {
+        document.querySelector('.hero p').classList.add('animate-fade-in');
+      }, 600);
+      setTimeout(() => {
+        document.querySelector('.hero-btns').classList.add('animate-fade-in-up');
+      }, 1000);
+
+      // Stats animation
+      const stats = document.querySelectorAll('.stat');
+      stats.forEach((stat, index) => {
+        setTimeout(() => {
+          stat.classList.add('animate-fade-in-up');
+        }, 1400 + index * 200);
+      });
+
+      // Service cards animation
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+          }
+        });
+      }, observerOptions);
+
+      // Observe service cards
+      document.querySelectorAll('.service-card').forEach(card => {
+        observer.observe(card);
+      });
+
+      // Observe why cards
+      document.querySelectorAll('.why-card').forEach(card => {
+        observer.observe(card);
+      });
+
+      // Observe testimonial cards
+      document.querySelectorAll('.test-card').forEach(card => {
+        observer.observe(card);
+      });
+    }
+
+    function initAOS() {
+      const startAOS = () => {
+        if (window.AOS) {
+          AOS.init({
+            duration: 700,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 120
+          });
+        }
+      };
+      if (document.readyState === 'complete') {
+        startAOS();
+      } else {
+        window.addEventListener('load', startAOS);
+      }
+    }
+
+    // === Init ===
+    loadHomeServices(); animateCounters(); initAnimations(); initAOS();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+</body>
+
+</html>

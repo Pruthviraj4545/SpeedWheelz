@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage your car service appointments at SpeedWheelz Auto Care">
+  <title>Appointments - SpeedWheelz</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <span class="logo-icon"><i class="fas fa-car"></i></span>
+      <span>Speed<span class="highlight">Wheelz</span></span>
+    </a>
+    <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/book">Book Appointment</a></li>
+      <li><a href="/appointments-page" class="active">Appointments</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="page-header">
+    <h1><i class="fas fa-clipboard-list"></i> All Appointments</h1>
+    <p>View and manage all booked service appointments</p>
+  </section>
+
+  <main>
+    <section class="card">
+      <h2>Booked Appointments</h2>
+      <div id="appointmentsList">
+        <p class="loading">Loading appointments...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <span class="highlight">SpeedWheelz Auto Care</span> — All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const API = '';
+
+    function formatTime(t) {
+      const [h, m] = t.split(':');
+      const hr = parseInt(h);
+      const ampm = hr >= 12 ? 'PM' : 'AM';
+      const dh = hr > 12 ? hr - 12 : hr;
+      return dh + ':' + m + ' ' + ampm;
+    }
+
+    function formatDate(d) {
+      const parts = d.split('-');
+      return parts[2] + '/' + parts[1] + '/' + parts[0];
+    }
+
+    async function loadAppointments() {
+      const container = document.getElementById('appointmentsList');
+      try {
+        const res = await fetch(API + '/appointments');
+        const appointments = await res.json();
+
+        if (appointments.length === 0) {
+          container.innerHTML = '<p class="no-appointments">No appointments booked yet. <a href="/book" style="color:#f59e0b;font-weight:600;">Book one now →</a></p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        appointments.forEach(apt => {
+          const card = document.createElement('div');
+          card.className = 'appointment-card';
+          const isPast = isPastAppointment(apt);
+          const statusLabel = isPast ? 'Past' : 'Upcoming';
+          const actionButton = isPast
+            ? '<button class="btn btn-disabled" disabled>Past appointment</button>'
+            : '<button class="btn btn-danger" onclick="cancelAppointment(\'' + apt._id + '\')">Cancel</button>';
+
+          card.innerHTML =
+            '<div class="appointment-info">' +
+              '<h3>' + apt.name + '</h3>' +
+              '<p><i class="fas fa-phone"></i> <span>' + apt.phone + '</span></p>' +
+              '<p><i class="fas fa-car"></i> <span>' + apt.carBrand + ' ' + apt.carModel + '</span></p>' +
+              '<p><i class="fas fa-tools"></i> <span>' + apt.service + '</span></p>' +
+              '<p><i class="fas fa-calendar"></i> <span>' + formatDate(apt.date) + '</span> &nbsp; <i class="fas fa-clock"></i> <span>' + formatTime(apt.time) + '</span></p>' +
+              '<span class="appointment-badge ' + (isPast ? 'appointment-badge--past' : '') + '">' + statusLabel + '</span>' +
+            '</div>' +
+            actionButton;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        container.innerHTML = '<p class="no-appointments">Failed to load appointments. Please try again.</p>';
+      }
+    }
+
+    function isPastAppointment(apt) {
+      const [year, month, day] = apt.date.split('-').map(Number);
+      const [hour, minute] = apt.time.split(':').map(Number);
+      const appointmentDate = new Date(year, month - 1, day, hour, minute);
+      return appointmentDate < new Date();
+    }
+
+    async function cancelAppointment(id) {
+      if (!confirm('Are you sure you want to cancel this appointment?')) return;
+      try {
+        const res = await fetch(API + '/appointments/' + id, { method: 'DELETE' });
+        if (res.ok) {
+          loadAppointments();
+        } else {
+          alert('Failed to cancel appointment.');
+        }
+      } catch (err) {
+        alert('Server error. Please try again.');
+      }
+    }
+
+    loadAppointments();
+  </script>
+</body>
+</html>
