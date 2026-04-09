@@ -91,12 +91,15 @@ Assignment6/
 - **Database:** MongoDB + Mongoose
 - **Frontend:** HTML, CSS, JavaScript (vanilla)
 
--<img width="1909" height="909" alt="Screenshot 2026-04-09 130944" src="https://github.com/user-attachments/assets/e3bc1161-da14-4da2-b0aa-0048c08c8749" />
-- <img width="1907" height="909" alt="Screenshot 2026-04-09 131054" src="https://github.com/user-attachments/assets/8e8368a3-2cb1-41b4-93f7-d8bde9a0b518" />
+<img width="1895" height="914" alt="Screenshot 2026-04-09 130918" src="https://github.com/user-attachments/assets/2bc00ff1-23f3-4904-8231-1965189b4a60" />
+<img width="1907" height="918" alt="Screenshot 2026-04-09 130936" src="https://github.com/user-attachments/assets/fbc1473d-19e1-4cfb-a6e2-731d2b91f67e" />
+<img width="1906" height="913" alt="Screenshot 2026-04-09 131029" src="https://github.com/user-attachments/assets/5e58f620-5e12-4215-a594-2ebab2664265" />
+<img width="1909" height="909" alt="Screenshot 2026-04-09 130944" src="https://github.com/user-attachments/assets/e3bc1161-da14-4da2-b0aa-0048c08c8749" />
+<img width="1907" height="909" alt="Screenshot 2026-04-09 131054" src="https://github.com/user-attachments/assets/8e8368a3-2cb1-41b4-93f7-d8bde9a0b518" />
 <img width="1907" height="912" alt="Screenshot 2026-04-09 131041" src="https://github.com/user-attachments/assets/e2e094f4-c94f-4a2f-8b70-bf7b06fc6723" />
 <img width="1905" height="914" alt="Screenshot 2026-04-09 130952" src="https://github.com/user-attachments/assets/a1d8b04f-2d82-4619-9a37-ddb60289ab91" />
-<img width="1906" height="913" alt="Screenshot 2026-04-09 131029" src="https://github.com/user-attachments/assets/5e58f620-5e12-4215-a594-2ebab2664265" />
-<img width="1907" height="918" alt="Screenshot 2026-04-09 130936" src="https://github.com/user-attachments/assets/fbc1473d-19e1-4cfb-a6e2-731d2b91f67e" />
-<img width="1895" height="914" alt="Screenshot 2026-04-09 130918" src="https://github.com/user-attachments/assets/2bc00ff1-23f3-4904-8231-1965189b4a60" />
+
+
+
 
 
